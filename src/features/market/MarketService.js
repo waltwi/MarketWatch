@@ -1,5 +1,5 @@
 const FINNHUB_BASE = 'https://finnhub.io/api/v1'
-const API_KEY = process.env.REACT_APP_FINNHUB_KEY || ''
+const API_KEY = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_FINNHUB_KEY) || process.env.REACT_APP_FINNHUB_KEY || ''
 
 async function fetchQuote(symbol) {
   if (!API_KEY) return mockQuote(symbol)
