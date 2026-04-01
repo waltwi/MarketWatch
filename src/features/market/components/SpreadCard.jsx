@@ -1,19 +1,35 @@
 import React from 'react'
 
+function fmtPrice(v) {
+  if (v === null || v === undefined || v === '' || Number.isNaN(Number(v))) return '—'
+  const n = Number(v)
+  return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
 export default function SpreadCard({ symbol = 'SYM', name = '', price = '--', percent = 0 }) {
-  const positive = percent >= 0
+  const p = typeof percent === 'number' ? percent : Number(percent)
+  const positive = Number.isFinite(p) ? p >= 0 : true
   return (
-    <div className="p-4 rounded-md border border-slate-700 bg-slate-800 h-full flex flex-col justify-between">
-      <div>
-        <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold">{symbol}</div>
-          <div className={`text-sm ${positive ? 'text-green-400' : 'text-rose-400'}`}>{positive ? '+' : ''}{percent}%</div>
+    <div className="h-full rounded-xl border border-mw-border bg-mw-raised/90 shadow-card px-3.5 py-3 flex flex-col gap-2 min-h-[88px]">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-lg sm:text-xl font-bold tracking-tight text-white leading-tight">{symbol}</div>
+          {name ? (
+            <div className="text-[12px] text-mw-muted truncate mt-0.5">{name}</div>
+          ) : (
+            <div className="text-[12px] text-mw-muted mt-0.5">Equity</div>
+          )}
         </div>
-        {name && <div className="text-sm text-slate-300 mt-1">{name}</div>}
+        <div
+          className={`text-sm font-semibold tabular-nums shrink-0 ${
+            Number.isFinite(p) ? (positive ? 'text-mw-up' : 'text-mw-down') : 'text-mw-muted'
+          }`}
+        >
+          {Number.isFinite(p) ? `${positive ? '+' : ''}${p.toFixed(2)}%` : '—'}
+        </div>
       </div>
-      <div className="mt-4 text-right">
-        <div className="text-sm text-slate-300">Stock</div>
-        <div className="text-xl font-semibold">${price}</div>
+      <div className="flex items-end justify-end mt-auto pt-1 border-t border-mw-border/60">
+        <div className="text-base sm:text-lg font-semibold tabular-nums text-slate-100">${fmtPrice(price)}</div>
       </div>
     </div>
   )

@@ -8,11 +8,29 @@ export default function Chart({ type = 'candlestick' }) {
         id: 'candles',
         background: 'transparent',
         toolbar: { show: false },
+        fontFamily: 'ui-sans-serif, system-ui, sans-serif',
       },
-      xaxis: { type: 'datetime' },
-      grid: { borderColor: '#1f2937' },
-      yaxis: { tooltip: { enabled: true } },
-      plotOptions: { candlestick: { colors: { upward: '#60a5fa', downward: '#f87171' } } },
+      theme: { mode: 'dark' },
+      xaxis: {
+        type: 'datetime',
+        labels: { style: { colors: '#8b92a3', fontSize: '11px' } },
+        axisBorder: { show: false },
+        axisTicks: { color: '#252a36' },
+      },
+      yaxis: {
+        tooltip: { enabled: true },
+        labels: { style: { colors: '#8b92a3', fontSize: '11px' } },
+      },
+      grid: {
+        borderColor: '#252a36',
+        strokeDashArray: 4,
+        padding: { left: 8, right: 8 },
+      },
+      plotOptions: {
+        candlestick: {
+          colors: { upward: '#4ade80', downward: '#f87171' },
+        },
+      },
     }
 
     const series = [
@@ -50,7 +68,7 @@ export default function Chart({ type = 'candlestick' }) {
     ]
 
     return (
-      <div className="bg-slate-800 p-4 rounded-lg shadow-sm">
+      <div className="rounded-xl border border-mw-border bg-mw-raised/90 shadow-card p-3 sm:p-4 min-h-[320px]">
         <ReactApexChart options={options} series={series} type="candlestick" height={380} />
       </div>
     )
@@ -58,14 +76,23 @@ export default function Chart({ type = 'candlestick' }) {
 
   // default area as fallback
   const options = {
-    chart: { id: 'area', background: 'transparent', toolbar: { show: false } },
-    xaxis: { type: 'datetime' },
+    chart: {
+      id: 'area',
+      background: 'transparent',
+      toolbar: { show: false },
+      fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+    },
+    theme: { mode: 'dark' },
+    xaxis: {
+      type: 'datetime',
+      labels: { style: { colors: '#8b92a3', fontSize: '11px' } },
+    },
     stroke: { curve: 'smooth' },
-    grid: { borderColor: '#1f2937' },
+    grid: { borderColor: '#252a36', strokeDashArray: 4 },
   }
   const series = [{ name: 'Price', data: [[1640995200000, 120], [1641081600000, 125]] }]
   return (
-    <div className="bg-slate-800 p-4 rounded-lg shadow-sm">
+    <div className="rounded-xl border border-mw-border bg-mw-raised/90 shadow-card p-3 sm:p-4">
       <ReactApexChart options={options} series={series} type="area" height={320} />
     </div>
   )
