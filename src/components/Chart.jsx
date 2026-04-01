@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
 
-export default function Chart({ type = 'candlestick' }) {
+export default function Chart({ type = 'candlestick', title, subtitle }) {
   if (type === 'candlestick') {
     const options = {
       chart: {
@@ -69,6 +69,12 @@ export default function Chart({ type = 'candlestick' }) {
 
     return (
       <div className="rounded-xl border border-mw-border bg-mw-raised/90 shadow-card p-3 sm:p-4 min-h-[320px]">
+        {title || subtitle ? (
+          <div className="mb-3 sm:mb-4">
+            {title ? <div className="text-[15px] font-semibold text-white tracking-tight">{title}</div> : null}
+            {subtitle ? <div className="text-[12px] text-mw-muted mt-1 leading-relaxed">{subtitle}</div> : null}
+          </div>
+        ) : null}
         <ReactApexChart options={options} series={series} type="candlestick" height={380} />
       </div>
     )
@@ -93,6 +99,12 @@ export default function Chart({ type = 'candlestick' }) {
   const series = [{ name: 'Price', data: [[1640995200000, 120], [1641081600000, 125]] }]
   return (
     <div className="rounded-xl border border-mw-border bg-mw-raised/90 shadow-card p-3 sm:p-4">
+      {title || subtitle ? (
+        <div className="mb-3 sm:mb-4">
+          {title ? <div className="text-[15px] font-semibold text-white tracking-tight">{title}</div> : null}
+          {subtitle ? <div className="text-[12px] text-mw-muted mt-1 leading-relaxed">{subtitle}</div> : null}
+        </div>
+      ) : null}
       <ReactApexChart options={options} series={series} type="area" height={320} />
     </div>
   )
